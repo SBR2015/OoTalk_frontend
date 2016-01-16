@@ -11,6 +11,14 @@
   $ gulp
 ```
 
+## Environmental Variables
+
+- create ".env"
+
+### example
+
+    MONBOLAB_URI=mongodb:username:password@example.comblahblah/ootalk-dev
+
 ## App Information
 - [Travis CI](https://travis-ci.org/SBR2015/OoTalk_frontend)
 - [Heroku](https://ootalk.herokuapp.com)

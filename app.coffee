@@ -12,6 +12,7 @@ ectRenderer = ECT(
   root: __dirname + '/app/views'
   ext: '.ect')
 
+require('dotenv').load()
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
