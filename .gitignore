@@ -58,3 +58,4 @@ data/
 
 # new relic
 newrelic_agent.log
+.env
