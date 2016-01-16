@@ -82,8 +82,8 @@ window.codeui =
             for _n in $(n).children()
               rightValue = codeui.createNode(_n, $(_n).attr("class_name"), 'Right')
 
-        node = ootalk.newNode(className, leftValue, rightValue)
-        return node
+      node = ootalk.newNode(className, leftValue, rightValue)
+      return node
 
     return null
 
