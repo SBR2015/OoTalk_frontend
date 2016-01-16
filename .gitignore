@@ -55,3 +55,6 @@ Desktop.ini
 
 # json sample
 data/
+
+# new relic
+newrelic_agent.log

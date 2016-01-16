@@ -35,7 +35,7 @@ env = process.env.NODE_ENV || 'development'
 secrets = require('./config/secrets')[env]
 
 # newrelic
-require('newrelic')
+require('newrelic') if env == 'production'
 
 # mongodb settings
 mongoose = require('mongoose')
