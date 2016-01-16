@@ -1,3 +1,4 @@
+require('newrelic') if process.env.NODE_ENV == 'production'
 express = require('express')
 path = require('path')
 favicon = require('serve-favicon')
@@ -35,7 +36,7 @@ env = process.env.NODE_ENV || 'development'
 secrets = require('./config/secrets')[env]
 
 # newrelic
-require('newrelic') if env == 'production'
+# require('newrelic') if env == 'production'
 
 # mongodb settings
 mongoose = require('mongoose')
