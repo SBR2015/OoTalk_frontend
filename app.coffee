@@ -1,4 +1,6 @@
-require('newrelic') if process.env.NODE_ENV == 'production'
+env = process.env.NODE_ENV || 'development'
+require('newrelic') if env == 'production'
+require('dotenv').load() if env == 'development'
 express = require('express')
 path = require('path')
 favicon = require('serve-favicon')
@@ -12,7 +14,6 @@ ectRenderer = ECT(
   root: __dirname + '/app/views'
   ext: '.ect')
 
-require('dotenv').load()
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
@@ -33,7 +34,6 @@ app.use cookieParser()
 #   sourceMap: true)
 
 # secret keys
-env = process.env.NODE_ENV || 'development'
 secrets = require('./config/secrets')[env]
 
 # newrelic
