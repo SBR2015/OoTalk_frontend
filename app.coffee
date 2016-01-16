@@ -14,6 +14,24 @@ ectRenderer = ECT(
   root: __dirname + '/app/views'
   ext: '.ect')
 
+i18n = require('i18n')
+i18n.configure({
+  // setup some locales - other locales default to en silently
+  locales: ['en', 'ja', 'ch', 'vn'],
+
+  // you may alter a site wide default locale
+  defaultLocale: 'en',
+
+  // sets a custom cookie name to parse locale settings from
+  cookie: 'ootalk-internationalization',
+
+  // where to store json files - defaults to './locales'
+  directory: __dirname + '/locales'
+});
+
+// i18n init parses req for language headers, cookies, etc.
+app.use(i18n.init);
+
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
@@ -21,17 +39,12 @@ app.set 'views', path.join(process.cwd(), 'app', 'views')
 app.set 'view engine', 'ect'
 app.engine 'ect', ectRenderer.render
 
-# uncomment after placing your favicon in /public
-#app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+# uncomment after placing your favicon in /app/assets
+#app.use(favicon(path.join(__dirname, 'app/assets', 'favicon.ico')));
 app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
-# app.use require('node-sass-middleware')(
-#   src: path.join(__dirname, 'public')
-#   dest: path.join(__dirname, 'public')
-#   indentedSyntax: true
-#   sourceMap: true)
 
 # secret keys
 secrets = require('./config/secrets')[env]
@@ -76,7 +89,6 @@ course = require('./app/controllers/course')
 # path = require('path')
 
 app.use '/static', express.static(path.join(__dirname, 'build'))
-# app.use express.static(path.join(__dirname, 'public'))
 app.use '/', welcome
 # app.use '/', require('./app/controllers/index')
 app.use '/users', users

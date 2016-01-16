@@ -22,8 +22,8 @@ nodemon = require 'gulp-nodemon'
 livereload = require 'gulp-livereload'
 
 gulp.task 'browserify', ->
-    srcFiles = [glob.sync('./public/javascripts/**/*.cjsx'),
-                glob.sync('./public/javascripts/**/*.coffee')]
+    srcFiles = [glob.sync('./app/assets/javascripts/**/*.cjsx'),
+                glob.sync('./app/assets/javascripts/**/*.coffee')]
     browserify
             entries: srcFiles
             debug: true
@@ -40,8 +40,8 @@ gulp.task 'browserify', ->
 
 gulp.task 'sass', ->
   compileCSSFileName = 'application.css'
-  gulp.src ['./public/stylesheets/**/*.scss'
-            '!./public/stylesheets/' + compileCSSFileName]
+  gulp.src ['./app/assets/stylesheets/**/*.scss'
+            '!./app/assets/stylesheets/' + compileCSSFileName]
     .pipe sourcemaps.init
       loadMaps: true
     .pipe sass()
@@ -64,7 +64,7 @@ gulp.task 'server', ->
   nodemon(
     script: './bin/www'
     ext: 'ect coffee js'
-    ignore: ['public', 'build', 'app/views']
+    ignore: ['app/assets', 'build', 'app/views']
     env: {
       'NODE_ENV': 'development'
       'DEBUG': 'OoTalk_frontend'
@@ -83,13 +83,13 @@ gulp.task 'server', ->
   #     process.stdout.write chunk
 
   gulp.watch(
-    'public/javascripts/**/*.cjsx'
+    'app/assets/javascripts/**/*.cjsx'
     ['browserify']
   ).on 'change', (event) ->
     livereload.changed event
 
   gulp.watch(
-    'public/stylesheets/**/*.scss'
+    'app/assets/stylesheets/**/*.scss'
     ['sass']
   ).on 'change', (event) ->
     livereload.changed event
@@ -100,12 +100,12 @@ gulp.task 'server', ->
     livereload.changed event
 
 # gulp.task 'livereload', ->
-#   gulp.src ['./public','./app']
+#   gulp.src ['./app/assets','./app']
 #     .pipe livereload(livereload: true)
 
 # gulp.task 'watch', ->
-  # gulp.watch 'public/javascripts/**/*.cjsx', ['browserify']
-  # gulp.watch 'public/stylesheets/**/*.scss', ['sass']
+  # gulp.watch 'app/assets/javascripts/**/*.cjsx', ['browserify']
+  # gulp.watch 'app/assets/stylesheets/**/*.scss', ['sass']
   # gulp.watch 'app/models/**/*.coffee', ['server:restart']
   # gulp.watch 'app/controllers/**/*.coffee', ['server:restart']
   # gulp.watch 'app/views/**/*.ect', ['server:restart']
