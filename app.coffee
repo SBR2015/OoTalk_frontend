@@ -117,4 +117,10 @@ app.use (err, req, res, next) ->
     message: err.message
     error: {}
   return
+
+app.use (req, res, next) ->
+  res.locals
+    path: req.url.path
+  next();
+
 module.exports = app
