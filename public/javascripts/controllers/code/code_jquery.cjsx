@@ -61,10 +61,11 @@ $ ->
     trees = []
     codeui.initNode()
     codeui.createTreeNode($("#input_code"))
+    console.log 'treeNode is here'
     console.log codeui.treeNode()
     for elem in codeui.treeNode()
       trees.push {"Program": elem}
-
+    console.log "tree is here"
     console.log JSON.stringify trees
     $('#output_code').text ""
 

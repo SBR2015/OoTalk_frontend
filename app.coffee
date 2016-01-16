@@ -34,6 +34,9 @@ app.use cookieParser()
 env = process.env.NODE_ENV || 'development'
 secrets = require('./config/secrets')[env]
 
+# newrelic
+require('newrelic')
+
 # mongodb settings
 mongoose = require('mongoose')
 mongoose.connect secrets.db # process.env.MONGOLAB_URI
