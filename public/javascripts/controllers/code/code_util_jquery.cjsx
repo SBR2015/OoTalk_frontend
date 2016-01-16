@@ -30,7 +30,7 @@ window.codeutil =
     #syntax_listのアイコン
     ICONS = ['+', '−', '×', '÷', '%', 'log', 'aⁿ', '&', '!&', 'ǀǀ', '!ǀǀ', '⊕', '=', '≠','>', '≥', '<', '≤','→', '↻', 'if','a', '0']
     # URL = "http://127.0.0.1:3000/api/v1/abstractsyntax/"
-    URL = "https://ootalkbackend.herokuapp.com/api/v1/abstractsyntax/"
+    URL = "https://ootalk-syntax-list.herokuapp.com/"
     LANG = lang ? "en"
     $.get URL + LANG, null, (lists) =>
       abstract_syntax_lists = $("#abstract_syntax_lists")
