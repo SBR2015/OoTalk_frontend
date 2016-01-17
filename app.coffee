@@ -82,6 +82,8 @@ app.use (req, res, next) ->
   res.locals.input_json = res.__('input json')
   res.locals.about = res.__('about')
   res.locals.faq = res.__('faq')
+  res.locals.who_we_are = res.__('who we are')
+  res.locals.about_us = res.__('about us')
   res.locals.contact_us = res.__('contact us')
   res.locals.mission_statement = res.__("mission statement")
   next()
