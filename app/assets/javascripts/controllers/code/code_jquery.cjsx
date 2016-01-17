@@ -1,6 +1,4 @@
 $ ->
-  sitei18n.init()
-
   # Drop初期化
   $('#input_code').droppable
     tolerance: "pointer"

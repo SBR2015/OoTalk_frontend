@@ -98,6 +98,11 @@ gulp.task 'server', ->
     'app/views/*.ect'
   ).on 'change', (event) ->
     livereload.changed event
+  
+  gulp.watch(
+    'locales'
+  ).on 'change', (event) ->
+    livereload.changed event
 
 # gulp.task 'livereload', ->
 #   gulp.src ['./app/assets','./app']

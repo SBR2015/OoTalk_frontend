@@ -2,6 +2,8 @@ env = process.env.NODE_ENV || 'development'
 require('newrelic') if env == 'production'
 require('dotenv').load() if env == 'development'
 express = require('express')
+session = require('express-session')
+i18n = require("i18n")
 path = require('path')
 favicon = require('serve-favicon')
 logger = require('morgan')
@@ -13,24 +15,6 @@ ectRenderer = ECT(
   watch: true
   root: __dirname + '/app/views'
   ext: '.ect')
-
-i18n = require('i18n')
-i18n.configure({
-  // setup some locales - other locales default to en silently
-  locales: ['en', 'ja', 'ch', 'vn'],
-
-  // you may alter a site wide default locale
-  defaultLocale: 'en',
-
-  // sets a custom cookie name to parse locale settings from
-  cookie: 'ootalk-internationalization',
-
-  // where to store json files - defaults to './locales'
-  directory: __dirname + '/locales'
-});
-
-// i18n init parses req for language headers, cookies, etc.
-app.use(i18n.init);
 
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
@@ -45,6 +29,14 @@ app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
+
+i18n.configure
+  locales: ['ja', 'en', 'cn', 'vi'],
+  defaultLocale: 'ja',
+  directory: __dirname + "/locales",
+  objectNotation: true
+
+app.use(i18n.init);
 
 # secret keys
 secrets = require('./config/secrets')[env]
@@ -76,32 +68,25 @@ require './config/passport'
 csrf = require('csurf')
 app.use csrf()
 
-# load routes settings
-users = require('./app/controllers/users')
-welcome = require('./app/controllers/welcome')
-code = require('./app/controllers/code')
-code_json = require('./app/controllers/code_json')
-course = require('./app/controllers/course')
+# middleware for assign local parameters like i18n
+app.use (req, res, next) ->
+  res.locals.hello_world = i18n.__('Hello, World!')
+  res.locals.course = i18n.__('course')
+  res.locals.language = i18n.__('language')
+  res.locals.menu = i18n.__('menu')
+  res.locals.code = i18n.__('code')
+  res.locals.input_json = i18n.__('input json')
+  res.locals.about = i18n.__('about')
+  res.locals.faq = i18n.__('faq')
+  res.locals.contact_us = i18n.__('contact us')
+  next()
 
-# api_users = require('./app/controllers/api/v1/users')
-# express = require('express')
-# app = express()
-# path = require('path')
-
+# static hosting
 app.use '/static', express.static(path.join(__dirname, 'build'))
-app.use '/', welcome
-# app.use '/', require('./app/controllers/index')
+baseroute = require('./app/routers/base')
+users = require('./app/routers/users')
+app.use baseroute
 app.use '/users', users
-
-app.use '/code', code
-app.use '/codejson', code_json
-
-app.use '/course', course
-
-# app.use '/users', require('./app/controllers/users')
-# app.use '/api/v1/users', api_users
-
-# require('./config/routes')(app, express)
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
@@ -129,10 +114,5 @@ app.use (err, req, res, next) ->
     message: err.message
     error: {}
   return
-
-app.use (req, res, next) ->
-  res.locals
-    path: req.url.path
-  next();
-
+    
 module.exports = app
