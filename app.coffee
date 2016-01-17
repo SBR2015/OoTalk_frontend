@@ -2,6 +2,8 @@ env = process.env.NODE_ENV || 'development'
 require('newrelic') if env == 'production'
 require('dotenv').load() if env == 'development'
 express = require('express')
+session = require('express-session')
+i18n = require("i18n")
 path = require('path')
 favicon = require('serve-favicon')
 logger = require('morgan')
@@ -13,7 +15,7 @@ ectRenderer = ECT(
   watch: true
   root: __dirname + '/app/views'
   ext: '.ect')
-
+  
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
@@ -21,17 +23,20 @@ app.set 'views', path.join(process.cwd(), 'app', 'views')
 app.set 'view engine', 'ect'
 app.engine 'ect', ectRenderer.render
 
-# uncomment after placing your favicon in /public
-#app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+# uncomment after placing your favicon in /app/assets
+#app.use(favicon(path.join(__dirname, 'app/assets', 'favicon.ico')));
 app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
-# app.use require('node-sass-middleware')(
-#   src: path.join(__dirname, 'public')
-#   dest: path.join(__dirname, 'public')
-#   indentedSyntax: true
-#   sourceMap: true)
+
+i18n.configure
+  locales: ['ja', 'en', 'cn', 'vi']
+  cookie: 'locale'
+  directory: __dirname + "/locales"
+  objectNotation: true
+
+app.use(i18n.init)
 
 # secret keys
 secrets = require('./config/secrets')[env]
@@ -46,7 +51,6 @@ mongoose.connect secrets.db # process.env.MONGOLAB_URI
 # passport
 flash = require('connect-flash')
 passport = require('passport')
-session = require('express-session')
 app.use flash()
 app.use session(
   secret: secrets.key_base # 'secrethogehoge'
@@ -63,33 +67,33 @@ require './config/passport'
 csrf = require('csurf')
 app.use csrf()
 
-# load routes settings
-users = require('./app/controllers/users')
-welcome = require('./app/controllers/welcome')
-code = require('./app/controllers/code')
-code_json = require('./app/controllers/code_json')
-course = require('./app/controllers/course')
+# middleware for assign local parameters like i18n
+app.use (req, res, next) ->
+  if req.query.lang
+    res.cookie 'locale', req.query.lang
+    req.setLocale(req.query.lang)
+  res.locals.locale = req.getLocale()
+  res.locals.hello_world = res.__('Hello, World!')
+  res.locals.course = res.__('course')
+  res.locals.language = res.__('language')
+  res.locals.menu = res.__('menu')
+  res.locals.code = res.__('code')
+  res.locals.delete = res.__('delete')
+  res.locals.input_json = res.__('input json')
+  res.locals.about = res.__('about')
+  res.locals.faq = res.__('faq')
+  res.locals.who_we_are = res.__('who we are')
+  res.locals.about_us = res.__('about us')
+  res.locals.contact_us = res.__('contact us')
+  res.locals.mission_statement = res.__("mission statement")
+  next()
 
-# api_users = require('./app/controllers/api/v1/users')
-# express = require('express')
-# app = express()
-# path = require('path')
-
+# static hosting
 app.use '/static', express.static(path.join(__dirname, 'build'))
-# app.use express.static(path.join(__dirname, 'public'))
-app.use '/', welcome
-# app.use '/', require('./app/controllers/index')
+baseroute = require('./app/routers/base')
+users = require('./app/routers/users')
+app.use baseroute
 app.use '/users', users
-
-app.use '/code', code
-app.use '/codejson', code_json
-
-app.use '/course', course
-
-# app.use '/users', require('./app/controllers/users')
-# app.use '/api/v1/users', api_users
-
-# require('./config/routes')(app, express)
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
@@ -117,10 +121,5 @@ app.use (err, req, res, next) ->
     message: err.message
     error: {}
   return
-
-app.use (req, res, next) ->
-  res.locals
-    path: req.url.path
-  next();
-
+    
 module.exports = app
