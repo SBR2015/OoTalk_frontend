@@ -1,11 +1,13 @@
 {
-	"Hello, World!": "Hello, World!",
-	"course": "course",
-	"language": "language",
-	"menu": "menu",
-	"code": "code",
+	"Hello, World!": "你好, 世界!",
+	"course": "课程",
+	"language": "语言",
+	"menu": "菜单",
+	"code": "程序设计",
 	"input json": "input json",
-	"about": "about",
+	"about": "关于 OoTalk",
 	"faq": "faq",
-  "contact us": 'contact us'
+	"contact us": "联系我们",
+	"mission statement": "我们的使命是通过在线编程教育创造了无国界的世界",
+	"delete": "删除"
 }

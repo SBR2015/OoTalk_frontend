@@ -1,11 +1,13 @@
 {
-	"Hello, World!": "Hello, World!",
-	"course": "course",
-	"language": "language",
-	"menu": "menu",
-	"code": "code",
+	"Hello, World!": "Chào thế giới!",
+	"course": "khóa học",
+	"language": "ngôn ngữ",
+	"menu": "mục lục",
+	"code": "lập trình",
 	"input json": "input json",
-	"about": "about",
+	"about": "về ootalk",
 	"faq": "faq",
-  "contact us": 'contact us'
+	"contact us": "liên hệ",
+	"delete": "xóa bỏ",
+	"mission statement": "Sứ mệnh của chúng tôi là tạo ra được thế giới không biên giới thông qua giáo dục lập trình trực tuyến"
 }

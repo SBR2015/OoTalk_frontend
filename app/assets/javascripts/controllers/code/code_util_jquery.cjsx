@@ -1,5 +1,5 @@
 
-window.codeutil =
+window.codeutil =  
   getParameterByName: (name) ->
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
     regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
@@ -26,7 +26,13 @@ window.codeutil =
       return '<span class="' + cls + '">' + match + '</span>'
 
   initSyntax: ->
-    lang = codeutil.getParameterByName "lang"
+    for item in document.cookie.split("; ")
+      kv = item.split('=')
+      console.log kv
+      if kv[0] is 'locale'
+        lang = kv[1]
+        break
+    
     #syntax_listのアイコン
     ICONS = ['+', '−', '×', '÷', '%', 'log', 'aⁿ', '&', '!&', 'ǀǀ', '!ǀǀ', '⊕', '=', '≠','>', '≥', '<', '≤','→', '↻', 'if','a', '0']
     # URL = "http://127.0.0.1:3000/api/v1/abstractsyntax/"

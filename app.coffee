@@ -15,7 +15,7 @@ ectRenderer = ECT(
   watch: true
   root: __dirname + '/app/views'
   ext: '.ect')
-
+  
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
@@ -31,12 +31,12 @@ app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 
 i18n.configure
-  locales: ['ja', 'en', 'cn', 'vi'],
-  defaultLocale: 'ja',
-  directory: __dirname + "/locales",
+  locales: ['ja', 'en', 'cn', 'vi']
+  cookie: 'locale'
+  directory: __dirname + "/locales"
   objectNotation: true
 
-app.use(i18n.init);
+app.use(i18n.init)
 
 # secret keys
 secrets = require('./config/secrets')[env]
@@ -51,7 +51,6 @@ mongoose.connect secrets.db # process.env.MONGOLAB_URI
 # passport
 flash = require('connect-flash')
 passport = require('passport')
-session = require('express-session')
 app.use flash()
 app.use session(
   secret: secrets.key_base # 'secrethogehoge'
@@ -70,15 +69,21 @@ app.use csrf()
 
 # middleware for assign local parameters like i18n
 app.use (req, res, next) ->
-  res.locals.hello_world = i18n.__('Hello, World!')
-  res.locals.course = i18n.__('course')
-  res.locals.language = i18n.__('language')
-  res.locals.menu = i18n.__('menu')
-  res.locals.code = i18n.__('code')
-  res.locals.input_json = i18n.__('input json')
-  res.locals.about = i18n.__('about')
-  res.locals.faq = i18n.__('faq')
-  res.locals.contact_us = i18n.__('contact us')
+  if req.query.lang
+    res.cookie 'locale', req.query.lang
+    req.setLocale(req.query.lang)
+  res.locals.locale = req.getLocale()
+  res.locals.hello_world = res.__('Hello, World!')
+  res.locals.course = res.__('course')
+  res.locals.language = res.__('language')
+  res.locals.menu = res.__('menu')
+  res.locals.code = res.__('code')
+  res.locals.delete = res.__('delete')
+  res.locals.input_json = res.__('input json')
+  res.locals.about = res.__('about')
+  res.locals.faq = res.__('faq')
+  res.locals.contact_us = res.__('contact us')
+  res.locals.mission_statement = res.__("mission statement")
   next()
 
 # static hosting
