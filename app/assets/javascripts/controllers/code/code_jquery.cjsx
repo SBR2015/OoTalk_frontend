@@ -6,6 +6,7 @@ $ ->
       return true if $element.parent().attr('id') is 'abstract_syntax_lists'
     drop: (event, ui) ->
       $(this).append(codeui.clone_dragged (ui))
+      localStorage.setItem("auto_saved_code", $(this).html())
       return
 
   # Sort初期化
@@ -17,6 +18,7 @@ $ ->
     $('#input_code').empty()
     $('#output_code').empty()
     $('#input_code').droppable('enable')
+    localStorage.setItem("auto_saved_code", "")
 
   #ゴミ箱
   $('#trash-can').droppable
@@ -33,11 +35,18 @@ $ ->
       $(this).css
         width: "30px"
     drop: (event, ui) ->
+      console.log ui
       $(ui.draggable).remove()
       $("#trash-o").hide()
       $("#trash-c").fadeIn()
-      $(this).animate({width: "30px"}, 1000)
-
+      $(this).animate(
+        {width: "30px"},
+        1000,
+        () ->
+          console.log $("#input_code").html()
+          localStorage.setItem("auto_saved_code", $("#input_code").html())
+      )
+  
   if $("#json_code").length == 1
     myCodeMirror = CodeMirror.fromTextArea $("#json_code")[0],
       name:"javascript"
@@ -59,12 +68,8 @@ $ ->
     trees = []
     codeui.initNode()
     codeui.createTreeNode($("#input_code"))
-    console.log 'treeNode is here'
-    console.log codeui.treeNode()
     for elem in codeui.treeNode()
       trees.push {"Program": elem}
-    console.log "tree is here"
-    console.log JSON.stringify trees
     $('#output_code').text ""
 
     o = {}

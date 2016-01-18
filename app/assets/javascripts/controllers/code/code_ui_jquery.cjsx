@@ -3,6 +3,28 @@
 ootalk = require 'OoTalk-js'
 
 window.codeui =
+  generate_child_node: (parent, s) ->
+    child_line = $('<div></div>').text(s).attr('class', 'plain')
+    if s.charAt(0) is "@"
+      $(child_line).attr('class_name', s.charAt(1).toUpperCase() + s.slice(2)).attr('class', "child-line")
+      #コンスタントの処理
+      if (parent.attr("class_name") is "Constant") or (parent.attr("class_name") is "Variable")
+        consInput = $("<input class='child-line-input' placeholder='@value'>").css
+          height: "25px"
+          width: "70px"
+          "background-color": "lightpink"
+          color: "white"
+        consInput
+        .focus ->
+          $(this).css
+            "background-color": "#f5f5f5"
+            color: "black"
+
+        $(child_line).css(padding: "0px")
+        $(child_line).text('').append(consInput)
+
+    child_line
+  
   clone_dragged: (ui) ->
     clone_drag = $(ui.draggable).clone()
     clone_string = clone_drag.attr('string')
@@ -15,43 +37,34 @@ window.codeui =
     clone_drag.text('')
 
     for s in this_string.split('\t')
-      child_line = $('<span></span>').text(s).attr('class_name', 'null')
-      if s.charAt(0) is "@"
-        $(child_line).attr('class_name', s.charAt(1).toUpperCase() + s.slice(2)).attr('id', "child-line")
-        #コンスタントの処理
-        if (ui.draggable.attr("class_name") is "Constant") or (ui.draggable.attr("class_name") is "Variable")
-          consInput = $("<input placeholder='@value'>").css
-            height: "25px"
-            width: "70px"
-            "background-color": "lightpink"
-            color: "white"
-          consInput.focus ->
-            $(this).css
-              "background-color": "#f5f5f5"
-              color: "black"
+      child_line = codeui.generate_child_node(ui.draggable, s)
+      #各elemenの入れ子
+      $(child_line).droppable
+        tolerance: "pointer"
+        #入れ子にelement一個しか入らない
+        accept: ($element) ->
+          return true if $(this).children().length < 1 && $element.parent().attr('id') is 'abstract_syntax_lists'
+        hoverClass: "ui-state-hover"
+        drop: (event, ui) ->
+          draggable      = $(ui.draggable)
+          droppable      = $(this)
+          draggableClass = draggable.attr('class')
+          droppableClass = droppable.attr('class')
+          $(this).append(codeui.clone_dragged(ui))
+          draggable.addClass(droppableClass)
+          droppable.addClass(draggableClass)
+          $("#input_code").droppable('enable')
+          localStorage.setItem("auto_saved_code", $("#input_code").html())
+        #２度ドロップを防ぐ
+        over: (event, ui) ->
+          $("#input_code").droppable('disable')
 
-          $(child_line).css(padding: "0px")
-          $(child_line).text('').append(consInput)
-
-        #各elemenの入れ子
-        $(child_line).droppable
-          tolerance: "pointer"
-          #入れ子にelement一個しか入らない
-          accept: ($element) ->
-            return true if $(this).children().length < 1 && $element.parent().attr('id') is 'abstract_syntax_lists'
-          hoverClass: "ui-state-hover"
-          drop: (event, ui) ->
-            $(this).append(codeui.clone_dragged(ui))
-            $("#input_code").droppable('enable')
-            return
-          #２度ドロップを防ぐ
-          over: (event, ui) ->
-            $("#input_code").droppable('disable')
-
-        $(child_line).sortable
-          connectWith: '#input_code'
+      $(child_line).sortable
+        connectWith: '#input_code'
       $(clone_drag).append(child_line)
+
     return clone_drag
+
   createNode: (childnode, className, operand) ->
     hasClass = false
     if className is null
@@ -60,7 +73,7 @@ window.codeui =
     if operand is 'Left' or operand is 'Right'
       hasClass = true
     else
-      for list in syntaxList
+      for list in codeutil.syntaxList
         if list.class_name is className
           hasClass = true
           break
@@ -98,6 +111,7 @@ window.codeui =
         console.log "while drag"
       stop: (event, ui) ->
         console.log "stop drag"
+    obj
 
   initNode: ->
     ootalk.init()
