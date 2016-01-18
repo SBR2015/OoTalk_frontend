@@ -6,7 +6,7 @@ $ ->
       return true if $element.parent().attr('id') is 'abstract_syntax_lists'
     drop: (event, ui) ->
       $(this).append(codeui.clone_dragged (ui))
-      localStorage.setItem("auto_saved_code", $(this).html())
+      localStorage.setItem("auto_saved_code", $("#input_code").html())
       return
 
   # Sort初期化

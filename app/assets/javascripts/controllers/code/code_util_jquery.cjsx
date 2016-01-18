@@ -64,25 +64,31 @@ window.codeutil =
             return true
 
           for syntax in lists
-            console.log syntax
             if syntax.class_name is $(this).attr('class_name')
-              children = $(this).children()
+              leftelm = $(this).find('div[class_name="Left"]')[0]
+              middleelm = $(this).find('div[class_name="Middle"]')[0]
+              rightelm = $(this).find('div[class_name="Right"]')[0]
               $(this).empty()
 
               comps = syntax.string.split('\t')
               for s in comps
-                child_line = codeui.generate_child_node($(this), s)
+                if s is "@left" and $(leftelm) and $(leftelm).children().length > 0
+                  child_line = leftelm
+                else if s is "@right" and $(rightelm) and $(rightelm).children().length > 0
+                  child_line = rightelm
+                else if s is "@middle" and $(middleelm) and $(middleelm).children().length > 0
+                  child_line = middleelm
+                else
+                  child_line = codeui.generate_child_node($(this), s)
+                  $(child_line).removeClass('child-line')
 
                 $(this).append($(child_line))
-              console.log $(this)
               break
       )
 
       #各elemenの入れ子
       $("div.child-line").each(
         (index)->
-          codeui.enDraggable $(this)
-
           $(this).droppable
             tolerance: "pointer"
             #入れ子にelement一個しか入らない
@@ -91,8 +97,8 @@ window.codeutil =
             hoverClass: "ui-state-hover"
             drop: (event, ui) ->
               $(this).append(codeui.clone_dragged(ui))
-              $("#input_code").droppable('enable')
               localStorage.setItem("auto_saved_code", $("#input_code").html())
+              $("#input_code").droppable('enable')
             #２度ドロップを防ぐ
             over: (event, ui) ->
               $("#input_code").droppable('disable')

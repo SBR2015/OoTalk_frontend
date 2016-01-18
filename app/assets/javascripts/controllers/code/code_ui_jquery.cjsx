@@ -19,9 +19,12 @@ window.codeui =
           $(this).css
             "background-color": "#f5f5f5"
             color: "black"
+        .change ->
+          $(this).attr('value', $(this).val())
 
         $(child_line).css(padding: "0px")
         $(child_line).text('').append(consInput)
+        $(child_line).removeClass('child-line')
 
     child_line
   
@@ -46,13 +49,7 @@ window.codeui =
           return true if $(this).children().length < 1 && $element.parent().attr('id') is 'abstract_syntax_lists'
         hoverClass: "ui-state-hover"
         drop: (event, ui) ->
-          draggable      = $(ui.draggable)
-          droppable      = $(this)
-          draggableClass = draggable.attr('class')
-          droppableClass = droppable.attr('class')
           $(this).append(codeui.clone_dragged(ui))
-          draggable.addClass(droppableClass)
-          droppable.addClass(draggableClass)
           $("#input_code").droppable('enable')
           localStorage.setItem("auto_saved_code", $("#input_code").html())
         #２度ドロップを防ぐ
