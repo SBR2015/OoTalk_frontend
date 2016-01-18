@@ -4,7 +4,7 @@
   min-width: 40px;
   margin-bottom: 5px;
 
-  div {
+  div.syntax {
     padding: 0.5em;
     text-align: center;
     font-size: 18px;
@@ -13,11 +13,16 @@
     cursor: move;
   }
 
-  #child-line {
+  div.plain {
+    display: inline-block;
+  }
+
+  div.child-line {
     padding: 0.2em;
     background-color: lightpink;
-    color: white;
+    color: #fff;
     display: inline-block;
+    border-color: #aaaaaa;
   }
 
   background: url('//raw.githubusercontent.com/SBR2015/ootalk-static/master/images/ootalk_background.png') no-repeat 10px 30px;
