@@ -58,10 +58,29 @@ window.codeutil =
       $('#input_code').empty()
       code = localStorage.getItem("auto_saved_code")
       $("#input_code").append($(code))
+      $("#input_code").find('div[class_name]').each(
+        (index)->
+          if $(this).attr('class_name') is 'Left' or $(this).attr('class_name') is 'Right' or $(this).attr('class_name') is 'Middle'
+            return true
+
+          for syntax in lists
+            console.log syntax
+            if syntax.class_name is $(this).attr('class_name')
+              children = $(this).children()
+              $(this).empty()
+
+              comps = syntax.string.split('\t')
+              for s in comps
+                child_line = codeui.generate_child_node($(this), s)
+
+                $(this).append($(child_line))
+              console.log $(this)
+              break
+      )
 
       #各elemenの入れ子
       $("div.child-line").each(
-        ()->
+        (index)->
           codeui.enDraggable $(this)
 
           $(this).droppable
