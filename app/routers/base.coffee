@@ -6,7 +6,7 @@ router.get '/', (req, res, next) ->
   res.render 'welcome/index'
 
 router.get '/code', (req, res, next) ->
-  res.render 'code/index'  
+  res.render 'code/index'
 
 router.get '/codejson', (req, res, next) ->
   res.render 'code_json/index'
@@ -19,6 +19,6 @@ router.get '/locale/:locale', (req, res, next) ->
   req.setLocale req.params.locale
   backURL = req.header('Referer') || '/'
   noParams = backURL.split('?')[0]
-  res.redirect(noParams);
+  res.redirect(noParams)
         
 module.exports = router

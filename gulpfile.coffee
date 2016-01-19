@@ -1,120 +1,104 @@
-gulp = require 'gulp'
-glob = require 'glob'
-watch = require 'gulp-watch'
-# livereload = require 'gulp-webserver'
-
-# CSS require files
-sass = require 'gulp-sass'
-sourcemaps = require 'gulp-sourcemaps'
-minifyCss = require 'gulp-minify-css'
-concat = require 'gulp-concat'
-
-# coffee require files
-browserify = require 'browserify'
 source = require 'vinyl-source-stream'
+gulp = require 'gulp'
+sass = require 'gulp-sass'
+gutil = require 'gulp-util'
+browserify = require 'browserify'
+coffee_reactify = require 'coffee-reactify'
+watchify = require 'watchify'
+notify = require 'gulp-notify'
+glob = require 'glob'
+nodemon = require 'gulp-nodemon'
+browserSync = require('browser-sync').create()
+reload = browserSync.reload
+concat = require 'gulp-concat'
 buffer = require 'vinyl-buffer'
 uglify = require 'gulp-uglify'
+sourcemaps = require 'gulp-sourcemaps'
+minifyCss = require 'gulp-minify-css'
 
-# nodejs server files
-# gls = require 'gulp-live-server'
-# server = gls.new './bin/www'
-nodemon = require 'gulp-nodemon'
-livereload = require 'gulp-livereload'
+paths =
+    srcFiles: [
+      glob.sync('./app/assets/javascripts/**/*.coffee'),
+      glob.sync('./app/assets/javascripts/**/*.cjsx')
+    ]
+    build: './build/javascripts'
+    buildFile: 'application.js'
 
-gulp.task 'browserify', ->
-    srcFiles = [glob.sync('./app/assets/javascripts/**/*.cjsx'),
-                glob.sync('./app/assets/javascripts/**/*.coffee')]
-    browserify
-            entries: srcFiles
-            debug: true
-            extensions: ['.coffee','.cjsx']
-            transform: ['coffee-reactify']
-      .bundle()
-      .pipe source('application.js')
-      .pipe buffer()
-      .pipe sourcemaps.init
-        loadMaps: true
-      .pipe uglify()
-      .pipe sourcemaps.write('./')
-      .pipe gulp.dest('build/javascripts')
 
-gulp.task 'sass', ->
-  compileCSSFileName = 'application.css'
-  gulp.src ['./app/assets/stylesheets/**/*.scss'
-            '!./app/assets/stylesheets/' + compileCSSFileName]
-    .pipe sourcemaps.init
-      loadMaps: true
-    .pipe sass()
-    .pipe concat(compileCSSFileName)
-    .pipe minifyCss()
-    .pipe sourcemaps.write('./')
-    .pipe gulp.dest('build/stylesheets')
+buildScript = (files, watch) ->
+    rebundle = ->
+        stream = bundler.bundle()
+        stream.on("error", notify.onError(
+            title: "Compile Error"
+            message: "<%= error.message %>"
+        )).pipe(source(paths.buildFile))
+          .pipe buffer()
+          .pipe sourcemaps.init({loadMaps: true})
+          .pipe uglify()
+          .pipe sourcemaps.write()
+          .pipe gulp.dest(paths.build)
 
-# gulp.task 'server:start', ->
-#   server.start()
-#
-# gulp.task 'server:restart', ->
-#   console.log 'server restarted'
-#   server.start.bind(server)
+    props = watchify.args
+    props.entries = files
+    props.debug = (process.env.NODE_ENV != 'production')
 
-gulp.task 'server', ->
-  livereload.listen()
-  # reloaded = undefined
+    bundler = (if watch then watchify(browserify(props)) else browserify(props))
+    bundler.transform coffee_reactify
+    bundler.on "update", ->
+        rebundle()
+        gutil.log "Rebundled..."
+        gutil.log paths.srcFiles
+        return
 
+    rebundle()
+
+gulp.task 'browsersync', ['nodemon'], ->
+  browserSync.init
+    proxy: 'http://localhost:3000'
+    port: 4000
+    open: false
+  return
+
+gulp.task 'nodemon', (cb) ->
+  called = false
   nodemon(
     script: './bin/www'
-    ext: 'ect coffee js'
-    ignore: ['app/assets', 'build', 'app/views']
-    env: {
-      'NODE_ENV': 'development'
-      'DEBUG': 'OoTalk_frontend'
-    }
-    stdout: false
-    ).on 'restart', ->
-      setTimeout (->
-        gulp.src('./bin/www')
-          .pipe(livereload())
-      ), 250
-  # ).on 'readable', ->
-  #   @stdout.on 'data', (chunk) ->
-  #     # if /\[nodemon\]\sstarting\s`node\s\.\/bin\/www`$/.test(chunk)
-  #     if /^listening/.test(chunk)
-  #       livereload.reload()
-  #     process.stdout.write chunk
+    ext: 'js html css'
+    ignore: [
+      './public'
+      'node_modules'
+    ]).on('start', ->
+      # サーバー起動時
+      if !called
+        called = true
+        cb()
+      return
+  ).on 'restart', ->
+    # サーバー再起動時
+    setTimeout (->
+      reload()
+      return
+    ), 500
+    return
 
-  gulp.watch(
-    'app/assets/javascripts/**/*.cjsx'
-    ['browserify']
-  ).on 'change', (event) ->
-    livereload.changed event
+gulp.task 'sass', ->
+    gulp.src('app/assets/stylesheets/**/*.scss')
+        .pipe sourcemaps.init
+          loadMaps: true
+        .pipe(sass().on('error', sass.logError))
+        .pipe(concat('application.css'))
+        .pipe minifyCss()
+        .pipe sourcemaps.write()
+        .pipe(gulp.dest('./build/stylesheets'))
 
-  gulp.watch(
-    'app/assets/stylesheets/**/*.scss'
-    ['sass']
-  ).on 'change', (event) ->
-    livereload.changed event
+gulp.task "browserify", ->
+    buildScript paths.srcFiles, false
 
-  gulp.watch(
-    'app/views/*.ect'
-  ).on 'change', (event) ->
-    livereload.changed event
-  
-  gulp.watch(
-    'locales'
-  ).on 'change', (event) ->
-    livereload.changed event
+gulp.task "build", ['sass', 'browserify']
 
-# gulp.task 'livereload', ->
-#   gulp.src ['./app/assets','./app']
-#     .pipe livereload(livereload: true)
+gulp.task "watch", ['build'], ->
+  gulp.watch 'app/assets/javascripts/**/*.cjsx', ['browserify']
+  gulp.watch 'app/assets/stylesheets/**/*.scss', ['sass']
 
-# gulp.task 'watch', ->
-  # gulp.watch 'app/assets/javascripts/**/*.cjsx', ['browserify']
-  # gulp.watch 'app/assets/stylesheets/**/*.scss', ['sass']
-  # gulp.watch 'app/models/**/*.coffee', ['server:restart']
-  # gulp.watch 'app/controllers/**/*.coffee', ['server:restart']
-  # gulp.watch 'app/views/**/*.ect', ['server:restart']
+gulp.task "default", ["watch", "browsersync"]
 
-gulp.task 'build', ['browserify', 'sass']
-# gulp.task 'default', ['watch', 'livereload', 'server:restart']
-gulp.task 'default', ['server']

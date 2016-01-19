@@ -13,6 +13,7 @@ $ ->
   $('#input_code').sortable
     connectWith: '#child-line'
 
+
   #reset button
   $("input[type ='reset']").click ->
     $('#input_code').empty()
@@ -35,7 +36,6 @@ $ ->
       $(this).css
         width: "30px"
     drop: (event, ui) ->
-      console.log ui
       $(ui.draggable).remove()
       $("#trash-o").hide()
       $("#trash-c").fadeIn()
@@ -43,7 +43,6 @@ $ ->
         {width: "30px"},
         1000,
         () ->
-          console.log $("#input_code").html()
           localStorage.setItem("auto_saved_code", $("#input_code").html())
       )
   
