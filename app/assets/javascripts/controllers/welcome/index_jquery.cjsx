@@ -14,4 +14,4 @@ $ ->
 
     error: (XMLHttpRequest, textStatus, errorThrown) ->
       $("#team-info").append(m_info)
-      console.log "Error"
+      console.log "error"
