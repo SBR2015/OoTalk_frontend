@@ -1,8 +1,11 @@
 # React = require('react')
 # ReactDOM = require('react-dom')
 #
-# Test = require('../../views/hoge/test')
-#
+# Hoge = React.createClass
+#   render: ->
+#     <div className="Test">
+#       React fooooooooooooosssssss!!!!!!!!
+#     </div>
 # window.onload = ( ->
 #   ReactDOM.render(
 #     # <CommentBox />
