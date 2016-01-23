@@ -1,16 +1,30 @@
 #course-list {
+  background-color: #f7f7f7;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+
   div {
     background-color: #fff;
+    // border: 1px solid #ff6666;
     display: inline-block;
-    height: 130px;
+    height: 200px;
     margin: 10px;
-    padding-top: 20px;
+    padding-top: 40px;
     text-align: center;
-    width: 100px;
+    width: 150px;
+
+    i {
+      color: #ff6666;
+    }
   }
 
   div:hover{
     background-color: #ff6666;
     color: #fff;
+
+    i {
+      color: #fff;
+    }
   }
 }
