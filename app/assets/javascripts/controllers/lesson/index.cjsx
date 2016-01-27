@@ -1,7 +1,7 @@
 React = require('react')
 ReactDOM = require('react-dom')
 
-BASEURL = "https://ootalkbackend.herokuapp.com/api/v1/"
+BASEURL = "https://ootalkbackend.herokuapp.com/api/v1"
 
 Lesson = React.createClass
   getInitialState: ->
@@ -9,7 +9,7 @@ Lesson = React.createClass
 
   componentDidMount: ->
     $.ajax
-      url: BASEURL + "courses/6/lessons.json"
+      url: BASEURL + location.pathname
       type:'GET'
       dataType: 'json'
       success: ((data) ->
@@ -22,11 +22,11 @@ Lesson = React.createClass
 
   render: ->
     return (
-      <div id="course-list">
+      <div id="lesson-list">
         { @state.lessons.map (l) ->
-          <div>
-            <i className="fa fa-book fa-3x" />
-            <br /><br />{ l.title }
+          <div key = { l.id }>
+            <i className="fa fa-file-text fa-2x" />
+            { l.title }
           </div>
         }
       </div>
@@ -53,9 +53,4 @@ Lesson = React.createClass
 #   )
 # )
 
-$ ->
-  ReactDOM.render(
-    # <CommentBox />
-    React.createElement(Lesson, null),
-    document.getElementById('lesson-content')
-  )
+module.exports = Lesson
