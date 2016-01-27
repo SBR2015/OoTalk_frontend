@@ -1,6 +1,8 @@
 React = require('react')
 ReactDOM = require('react-dom')
 
+URL = "https://ootalkbackend.herokuapp.com/api/v1/courses.json"
+
 Course = React.createClass
   getInitialState: ->
     course: []
@@ -12,7 +14,7 @@ Course = React.createClass
     #   json: true
     #   }, (err, httpResponse, body) ->
     $.ajax
-      url: "https://ootalkbackend.herokuapp.com/api/v1/courses.json"
+      url: URL
       type:'GET'
       dataType: 'json'
       success: ((data) ->
@@ -39,13 +41,9 @@ Course = React.createClass
       # <div><i className="fa fa-book"></i></div>
     )
 
-
-URL = "https://ootalkbackend.herokuapp.com/api/v1/courses.json"
-
-window.onload = ( ->
-  ReactDOM.render(
-    # <CommentBox />
-    React.createElement(Course, null),
-    document.getElementById('course-content')
-  )
-)
+# $ ->
+#   ReactDOM.render(
+#     # <CommentBox />
+#     React.createElement(Course, null),
+#     document.getElementById('course-content')
+#   )
