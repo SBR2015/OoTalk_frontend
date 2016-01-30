@@ -5,6 +5,7 @@ $ ->
     accept: ($element) ->
       return true if $element.parent().attr('id') is 'abstract_syntax_lists'
     drop: (event, ui) ->
+      console.log "input:" + $(this).outerHeight()
       $(this).append(codeui.clone_dragged (ui))
       localStorage.setItem("auto_saved_code", $("#input_code").html())
       current_height = $(this).outerHeight()
@@ -38,16 +39,12 @@ $ ->
       $(this).append()
     out: (event, ui)->
       $(this).css
-        
         width: "30px"
     drop: (event, ui) ->
       $(ui.draggable).remove()
       current_height = $("#input_code").outerHeight()
-      if current_height < 454
-        $(this).css("height", "400px")
-      else
-        del_height = current_height - 54
-        $(this).css("height", del_height + "px")
+      del_height = current_height - ui.draggable.outerHeight()
+      $(this).css("height", del_height + "px")
       $("#trash-o").hide()
       $("#trash-c").fadeIn()
       $(this).animate(
