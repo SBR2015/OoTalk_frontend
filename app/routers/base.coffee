@@ -3,9 +3,7 @@ router = express.Router()
 
 # Routers
 router.get '/', (req, res, next) ->
-  # if req.isAuthenticated()
-  #   res.render 'welcome/index', {email: req.user.email, is_sigined: req.isAuthenticated()}
-  # else
+  console.log req.user
   res.render 'welcome/index'
 
 router.get '/code', (req, res, next) ->

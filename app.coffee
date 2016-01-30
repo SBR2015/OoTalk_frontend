@@ -102,8 +102,10 @@ app.use (req, res, next) ->
 app.use '/static', express.static(path.join(__dirname, 'build'))
 baseroute = require('./app/routers/base')
 users = require('./app/routers/users')
+api = require('./app/routers/api')
 app.use baseroute
 app.use '/users', users
+app.use '/api/v1', api
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
