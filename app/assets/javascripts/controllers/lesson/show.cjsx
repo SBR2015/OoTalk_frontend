@@ -26,24 +26,6 @@ Lesson = React.createClass
 
   render: ->
     return (
-      # <div>
-      #   adjakdjak
-      #   <h2>{ @state.lesson.title }</h2>
-      #   <p dangerouslySetInnerHTML={{ __html: @state.body }} />
-      # </div>
-      # <div id="lesson-list">
-      #   { @state.lessons.map (l) ->
-      #     <a key={ l.id } href={ location + "/" + l.id }>
-      #       <div key = { l.id }>
-      #         <i className="fa fa-file-text fa-2x" />
-      #         { l.title }
-      #       </div>
-      #     </a>
-      #   }
-      # </div>
-      # <div><i className="fa fa-book"></i></div>
-
-      # <div>abc</div>
       <div>
         <h2>{ @state.lesson.title }</h2>
         <p dangerouslySetInnerHTML={{ __html: @state.body }} />
