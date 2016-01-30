@@ -27,7 +27,7 @@ window.codeui =
         $(child_line).removeClass('child-line')
 
     child_line
-  
+
   clone_dragged: (ui) ->
     clone_drag = $(ui.draggable).clone()
     clone_string = clone_drag.attr('string')
@@ -52,6 +52,8 @@ window.codeui =
           $(this).append(codeui.clone_dragged(ui))
           $("#input_code").droppable('enable')
           localStorage.setItem("auto_saved_code", $("#input_code").html())
+          current_height = $("#input_code").outerHeight()
+          $('#trash-can').css("height", current_height + "px")
         #２度ドロップを防ぐ
         over: (event, ui) ->
           $("#input_code").droppable('disable')

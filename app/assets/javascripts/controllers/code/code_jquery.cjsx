@@ -7,6 +7,8 @@ $ ->
     drop: (event, ui) ->
       $(this).append(codeui.clone_dragged (ui))
       localStorage.setItem("auto_saved_code", $("#input_code").html())
+      current_height = $(this).outerHeight()
+      $('#trash-can').css("height", current_height + "px")
       return
 
   # Sort初期化
@@ -17,6 +19,7 @@ $ ->
   #reset button
   $("input[type ='reset']").click ->
     $('#input_code').empty()
+    $('#trash-can').css("height", "400px")
     $('#output_code').empty()
     $('#input_code').droppable('enable')
     localStorage.setItem("auto_saved_code", "")
@@ -30,13 +33,21 @@ $ ->
       $("#trash-o").fadeIn()
       $("#trash-c").hide()
       $(this).css
+        height: $("#input_code").outerHeight() + "px"
         width: "300px"
       $(this).append()
     out: (event, ui)->
       $(this).css
+        
         width: "30px"
     drop: (event, ui) ->
       $(ui.draggable).remove()
+      current_height = $("#input_code").outerHeight()
+      if current_height < 454
+        $(this).css("height", "400px")
+      else
+        del_height = current_height - 54
+        $(this).css("height", del_height + "px")
       $("#trash-o").hide()
       $("#trash-c").fadeIn()
       $(this).animate(
@@ -45,7 +56,7 @@ $ ->
         () ->
           localStorage.setItem("auto_saved_code", $("#input_code").html())
       )
-  
+
   if $("#json_code").length == 1
     myCodeMirror = CodeMirror.fromTextArea $("#json_code")[0],
       name:"javascript"
