@@ -5,7 +5,6 @@ $ ->
     accept: ($element) ->
       return true if $element.parent().attr('id') is 'abstract_syntax_lists'
     drop: (event, ui) ->
-      console.log "input:" + $(this).outerHeight()
       $(this).append(codeui.clone_dragged (ui))
       localStorage.setItem("auto_saved_code", $("#input_code").html())
       current_height = $(this).outerHeight()
