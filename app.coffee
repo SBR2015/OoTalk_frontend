@@ -96,6 +96,7 @@ app.use (req, res, next) ->
   res.locals.contact_us = res.__('contact us')
   res.locals.mission_statement = res.__("mission statement")
   res.locals.welcome = res.__("welcome")
+  res.locals.course_list = res.__("course_list")
   next()
 
 # static hosting
