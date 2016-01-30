@@ -5,6 +5,7 @@ BASEURL = "https://ootalkbackend.herokuapp.com/api/v1"
 
 LessonList = React.createClass
   getInitialState: ->
+    course: ""
     lessons: []
 
   componentDidMount: ->
@@ -14,7 +15,8 @@ LessonList = React.createClass
       dataType: 'json'
       success: ((data) ->
         @setState
-          lessons: data
+          course: data.course.title
+          lessons: data.lessons
       ).bind(this)
       error: ((XMLHttpRequest, textStatus, errorThrown) ->
         console.log errorThrown
@@ -23,6 +25,7 @@ LessonList = React.createClass
   render: ->
     return (
       <div id="lesson-list">
+        <h2><i className="fa fa-book fa-2x" /><span>{ @state.course }</span></h2>
         { @state.lessons.map (l) ->
           <a key={ l.id } href={ location + "/" + l.id }>
             <div key = { l.id }>
