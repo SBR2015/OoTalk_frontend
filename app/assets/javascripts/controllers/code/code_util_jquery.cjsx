@@ -42,7 +42,6 @@ window.codeutil =
         lang = kv[1]
         break
     
-    # URL = "http://127.0.0.1:3000/api/v1/abstractsyntax/"
     URL = "https://ootalk-syntax-list.herokuapp.com/"
     LANG = lang ? "en"
     $.get URL + LANG, null, (lists) =>
@@ -139,14 +138,25 @@ window.codeutil =
       results.push codeutil.childProgram(program)
     results
 
-  executeRequest: (params) ->
+
+  checkToken: (callback) ->
+    $.ajax '/api/v1/users',
+      type: 'GET'
+      dataType: 'json'
+      timeout: 10000
+      success: (data) ->
+        callback(data)
+      error: (XMLHttpRequest, textStatus, errorThrown) ->
+        alert(textStatus)
+
+  executeRequest: (params, userinfo) ->
     $.ajax 'https://ootalkbackend.herokuapp.com/api/v1/execute',
       type: 'POST'
+      headers: userinfo["headers"]
       dataType: 'json'
       data : params
       timeout: 10000
       success: (data) ->
-        #    $('#output_code').html syntaxHighlight JSON.stringify(data, undefined, 4)
         headline_text = '<table class = "table table-hover"><thead><tr><th></td><th>' + 'Excute Code' + '</th><th>' + 'Excute Result' + '</th></tr></thead><tbody></tbody></table>'
         $('#output_code').append(headline_text)
         for d, i in data
