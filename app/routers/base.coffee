@@ -10,9 +10,12 @@ router.get '/code', (req, res, next) ->
 
 router.get '/codejson', (req, res, next) ->
   res.render 'code_json/index'
-  
-router.get '/course', (req, res, next) ->
+
+router.get '/courses', (req, res, next) ->
   res.render 'course/index'
+
+router.get '/courses/:id/lessons', (req, res, next) ->
+  res.render 'lesson/index'
 
 router.get '/locale/:locale', (req, res, next) ->
   res.cookie 'locale', req.params.locale
@@ -20,5 +23,5 @@ router.get '/locale/:locale', (req, res, next) ->
   backURL = req.header('Referer') || '/'
   noParams = backURL.split('?')[0]
   res.redirect(noParams)
-        
+
 module.exports = router
