@@ -1,0 +1,24 @@
+<% extend 'common_bootstrap' %>
+<div class="col-md-2">
+  <!-- <h1>Lesson Content</h1> -->
+  <div id="lesson-content"></div>
+  <div id="lesson" hidden="true"></div>
+  <div id="course" hidden="true"></div>
+</div>
+
+<div class="col-md-7">
+  <form id="ast_code_execute" method="POST">
+    <div id="input_code"></div>
+    <% include 'layouts/partials/submit_button' %>
+    <% include 'layouts/partials/empty_button' %>
+    <% include 'layouts/partials/trash_bin' %>
+  </form>
+  <% include 'layouts/partials/output_code' %>
+</div>
+<div class="col-md-3">
+  <div id="abstract_syntax_lists"></div>
+</div>
+
+  <!-- <div id="test">aaaaaaa</div> -->
+  <!-- <div id="lesson-content"></div>
+  <div id="course-content" hidden="true"></div> -->

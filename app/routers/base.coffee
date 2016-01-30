@@ -20,6 +20,9 @@ router.get '/courses', (req, res, next) ->
 router.get '/courses/:id/lessons', (req, res, next) ->
   res.render 'lesson/index'
 
+router.get '/courses/:c_id/lessons/:l_id', (req, res, next) ->
+  res.render 'lesson/show'
+
 router.get '/locale/:locale', (req, res, next) ->
   res.cookie 'locale', req.params.locale
   req.setLocale req.params.locale

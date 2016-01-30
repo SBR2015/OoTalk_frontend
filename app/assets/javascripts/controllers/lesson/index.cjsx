@@ -3,7 +3,7 @@ ReactDOM = require('react-dom')
 
 BASEURL = "https://ootalkbackend.herokuapp.com/api/v1"
 
-Lesson = React.createClass
+LessonList = React.createClass
   getInitialState: ->
     lessons: []
 
@@ -24,33 +24,14 @@ Lesson = React.createClass
     return (
       <div id="lesson-list">
         { @state.lessons.map (l) ->
-          <div key = { l.id }>
-            <i className="fa fa-file-text fa-2x" />
-            { l.title }
-          </div>
+          <a key={ l.id } href={ location + "/" + l.id }>
+            <div key = { l.id }>
+              <i className="fa fa-file-text fa-2x" />
+              { l.title }
+            </div>
+          </a>
         }
       </div>
-      # <div><i className="fa fa-book"></i></div>
     )
 
-# addLoadEvent = (func) ->
-#   oldonload = window.onload
-#   if typeof window.onload != 'function'
-#     window.onload = func
-#   else
-#     window.onload = ->
-#       if oldonload
-#         oldonload()
-#       func()
-#       return
-#   return
-#
-# addLoadEvent ( ->
-#   ReactDOM.render(
-#     # <CommentBox />
-#     React.createElement(Lesson, null),
-#     document.getElementById('lesson-content')
-#   )
-# )
-
-module.exports = Lesson
+module.exports = LessonList
