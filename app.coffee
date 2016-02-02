@@ -88,6 +88,8 @@ app.use (req, res, next) ->
   res.locals.menu = res.__('menu')
   res.locals.code = res.__('code')
   res.locals.delete = res.__('delete')
+  res.locals.submit = res.__('submit')
+  res.locals.reset = res.__('reset')
   res.locals.input_json = res.__('input json')
   res.locals.about = res.__('about')
   res.locals.faq = res.__('faq')
