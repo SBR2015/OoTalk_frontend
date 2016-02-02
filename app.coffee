@@ -97,6 +97,8 @@ app.use (req, res, next) ->
   res.locals.mission_statement = res.__("mission statement")
   res.locals.welcome = res.__("welcome")
   res.locals.course_list = res.__("course_list")
+  res.locals.Privacy_Policy = res.__("Privacy_Policy")
+  res.locals.Terms_and_Conditions = res.__("Terms_and_Conditions")
   next()
 
 # static hosting
