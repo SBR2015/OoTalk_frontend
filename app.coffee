@@ -88,6 +88,8 @@ app.use (req, res, next) ->
   res.locals.menu = res.__('menu')
   res.locals.code = res.__('code')
   res.locals.delete = res.__('delete')
+  res.locals.submit = res.__('submit')
+  res.locals.reset = res.__('reset')
   res.locals.input_json = res.__('input json')
   res.locals.about = res.__('about')
   res.locals.faq = res.__('faq')
@@ -97,6 +99,8 @@ app.use (req, res, next) ->
   res.locals.mission_statement = res.__("mission statement")
   res.locals.welcome = res.__("welcome")
   res.locals.course_list = res.__("course_list")
+  res.locals.Privacy_Policy = res.__("Privacy_Policy")
+  res.locals.Terms_and_Conditions = res.__("Terms_and_Conditions")
   next()
 
 # static hosting
