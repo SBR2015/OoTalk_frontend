@@ -6,10 +6,16 @@
 	"code": "lập trình",
 	"input json": "input json",
 	"about": "về ootalk",
-	"faq": "faq",
+	"faq": "hỏi đáp",
 	"contact us": "liên hệ",
 	"delete": "xóa bỏ",
-	"mission statement": "Sứ mệnh của chúng tôi là tạo ra được thế giới không biên giới thông qua giáo dục lập trình trực tuyến",
-  "who we are": "Chúng ta là ai",
-	"about us": "Chúng tôi là một nhóm nghiên cứu tại AIT, nâng cao Viện Công nghệ công nghiệp, tại Tokyo. Chúng tôi đang nghiên cứu kỹ thuật và quản lý dự án. Hoạt động của chúng tôi là dựa trên phương pháp scrum, và chúng tôi cũng đang phát triển phần mềm theo cách nhanh nhẹn."
+	"mission statement": "Sứ mệnh của chúng tôi là tạo ra một thế giới không biên giới thông qua hệ thống giáo dục lập trình trực tuyến",
+	"who we are": "Chúng tôi là ai",
+	"about us": "Chúng tôi là một nhóm nghiên cứu tại AIIT, Học viện Kĩ thuật Công nghiệp, tại Tokyo. Chúng tôi đang nghiên cứu kỹ thuật và quản lý dự án. Hoạt động của chúng tôi dựa trên phương pháp scrum, và chúng tôi cũng đang phát triển phần mềm theo mô hình agile.",
+	"course_list": "Danh sách khoá học",
+	"welcome": "Chào mừng",
+	"submit": "submit",
+	"reset": "reset",
+	"Privacy_Policy": "Chính sách bảo mật",
+	"Terms_and_Conditions": "Điều khoản sử dụng"
 }

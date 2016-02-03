@@ -3,6 +3,7 @@ router = express.Router()
 
 # Routers
 router.get '/', (req, res, next) ->
+  console.log req.user
   res.render 'welcome/index'
 
 router.get '/code', (req, res, next) ->
@@ -11,11 +12,14 @@ router.get '/code', (req, res, next) ->
 router.get '/codejson', (req, res, next) ->
   res.render 'code_json/index'
 
-router.get '/course', (req, res, next) ->
+router.get '/courses', (req, res, next) ->
   res.render 'course/index'
 
-router.get '/lesson', (req, res, next) ->
+router.get '/courses/:id/lessons', (req, res, next) ->
   res.render 'lesson/index'
+
+router.get '/courses/:c_id/lessons/:l_id', (req, res, next) ->
+  res.render 'lesson/show'
 
 router.get '/locale/:locale', (req, res, next) ->
   res.cookie 'locale', req.params.locale

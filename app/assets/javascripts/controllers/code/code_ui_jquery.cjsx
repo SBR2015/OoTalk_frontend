@@ -41,22 +41,23 @@ window.codeui =
 
     for s in this_string.split('\t')
       child_line = codeui.generate_child_node(ui.draggable, s)
-      #各elemenの入れ子
-      $(child_line).droppable
-        tolerance: "pointer"
-        #入れ子にelement一個しか入らない
-        accept: ($element) ->
-          return true if $(this).children().length < 1 && $element.parent().attr('id') is 'abstract_syntax_lists'
-        hoverClass: "ui-state-hover"
-        drop: (event, ui) ->
-          $(this).append(codeui.clone_dragged(ui))
-          $("#input_code").droppable('enable')
-          localStorage.setItem("auto_saved_code", $("#input_code").html())
-          current_height = $("#input_code").outerHeight()
-          $('#trash-can').css("height", current_height + "px")
-        #２度ドロップを防ぐ
-        over: (event, ui) ->
-          $("#input_code").droppable('disable')
+      if s.charAt(0) is "@"
+        #各elemenの入れ子
+        $(child_line).droppable
+          tolerance: "pointer"
+          #入れ子にelement一個しか入らない
+          accept: ($element) ->
+            return true if $(this).children().length < 1 && $element.parent().attr('id') is 'abstract_syntax_lists'
+          hoverClass: "ui-state-hover"
+          drop: (event, ui) ->
+            $(this).append(codeui.clone_dragged(ui))
+            $("#input_code").droppable('enable')
+            localStorage.setItem("auto_saved_code", $("#input_code").html())
+            current_height = $("#input_code").outerHeight()
+            $('#trash-can').css("height", current_height + "px")
+          #２度ドロップを防ぐ
+          over: (event, ui) ->
+            $("#input_code").droppable('disable')
 
       $(child_line).sortable
         connectWith: '#input_code'

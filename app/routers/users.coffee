@@ -76,6 +76,6 @@ router.get '/signout', (req, res) ->
   # auth = new Authentication
   # auth.sign_out()
   req.logout()
-  res.redirect '/users/signin'
+  res.redirect '/'
 
 module.exports = router

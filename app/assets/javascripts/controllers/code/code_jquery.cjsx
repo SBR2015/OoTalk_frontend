@@ -67,7 +67,10 @@ $ ->
     doc = myCodeMirror.getDoc()
     o = {}
     o["code[src]"] = doc.getValue()
-    codeutil.executeRequest(o)
+    successCallback = (data) ->
+      codeutil.executeRequest(o, data)
+    
+    codeutil.checkToken(successCallback)
 
   $('#ast_code_execute').submit (event) ->
     event.preventDefault()
@@ -80,7 +83,10 @@ $ ->
 
     o = {}
     o["code[src]"] = JSON.stringify trees
-    codeutil.executeRequest(o)
+    successCallback = (data) ->
+      codeutil.executeRequest(o, data)
+    
+    codeutil.checkToken(successCallback)
 
   # Navigation var
   $('#subject').click ->

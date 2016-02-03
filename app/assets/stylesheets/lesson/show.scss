@@ -1,0 +1,19 @@
+.col-md-2 {
+  padding: 0;
+}
+
+#lesson-content {
+  background-color: #f7f7f7;
+  border: 1px solid #aaa;
+  height: 400px;
+  overflow: scroll;
+
+  h2 {
+    margin: 0;
+    padding: 10px;
+  }
+
+  p {
+    padding: 5px;
+  }
+}

@@ -15,7 +15,7 @@ ectRenderer = ECT(
   watch: true
   root: __dirname + '/app/views'
   ext: '.ect')
-  
+
 app.set 'views', path.join(process.cwd(), 'app', 'views')
 # view engine setup
 #app.set 'views', path.join(__dirname, 'views')
@@ -67,6 +67,15 @@ require './config/passport'
 csrf = require('csurf')
 app.use csrf()
 
+# passport login user info
+app.use (req, res, next) ->
+  res.locals.is_sigined = req.isAuthenticated()
+  if req.isAuthenticated()
+    res.locals.email = req.user.email
+  else
+    res.locals.email = ''
+  next()
+
 # middleware for assign local parameters like i18n
 app.use (req, res, next) ->
   if req.query.lang
@@ -79,6 +88,8 @@ app.use (req, res, next) ->
   res.locals.menu = res.__('menu')
   res.locals.code = res.__('code')
   res.locals.delete = res.__('delete')
+  res.locals.submit = res.__('submit')
+  res.locals.reset = res.__('reset')
   res.locals.input_json = res.__('input json')
   res.locals.about = res.__('about')
   res.locals.faq = res.__('faq')
@@ -86,14 +97,20 @@ app.use (req, res, next) ->
   res.locals.about_us = res.__('about us')
   res.locals.contact_us = res.__('contact us')
   res.locals.mission_statement = res.__("mission statement")
+  res.locals.welcome = res.__("welcome")
+  res.locals.course_list = res.__("course_list")
+  res.locals.Privacy_Policy = res.__("Privacy_Policy")
+  res.locals.Terms_and_Conditions = res.__("Terms_and_Conditions")
   next()
 
 # static hosting
 app.use '/static', express.static(path.join(__dirname, 'build'))
 baseroute = require('./app/routers/base')
 users = require('./app/routers/users')
+api = require('./app/routers/api')
 app.use baseroute
 app.use '/users', users
+app.use '/api/v1', api
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->
@@ -121,5 +138,5 @@ app.use (err, req, res, next) ->
     message: err.message
     error: {}
   return
-    
+
 module.exports = app
