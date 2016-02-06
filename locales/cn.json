@@ -8,8 +8,8 @@
 	"about": "关于 OoTalk",
 	"faq": "FAQ",
 	"contact us": "联系我们",
-	"Privacy Policy": "隐私政策",
-	"Terms and Conditions": "条款与条件",
+	"Privacy_Policy": "隐私政策",
+	"Terms_and_Conditions": "条款与条件",
 	"mission statement": "我们的宗旨是通过在线编程教育创建无国界的世界",
 	"delete": "删除",
 	"submit": "提交",
@@ -17,5 +17,7 @@
 	"who we are": "关于我们",
 	"about us": "我们是AIIT——东京产业技术大学院大学的一个研究小组。我们正在研究软件工程和项目管理。我们的研究项目是基于Scrum方法进行的，并且我们也采用敏捷方式进行软件开发。",
 	"course_list": "课程列表",
-	"welcome": "欢迎"
+	"welcome": "欢迎",
+	"Privacy_Policy": "Privacy Policy",
+	"Terms_and_Conditions": "Terms of Service"
 }

@@ -8,14 +8,16 @@
 	"about": "Ootalkについて",
 	"faq": "FAQ",
 	"contact us": "お問い合わせ",
-	"Privacy Policy": "プライバシーポリシー",
-	"Terms and Conditions": "契約条件",
+	"Privacy_Policy": "プライバシーポリシー",
+	"Terms_and_Conditions": "契約条件",
 	"mission statement": "我々は、プログラミング教育を通して、ボーダレスな世界を創造していきます。",
 	"delete": "削除",
 	"submit": "送信",
 	"reset": "リセット",
-  "who we are": "我々について",
+	"who we are": "我々について",
 	"about us": "我々は東京にあるAIIT(産業技術大学院大学)の研究グループです。主に、ソフトウェア工学とプロジェクトマネジメントを扱っています。 我々の活動はスクラムをベースに行っている点が特徴であり、ソフトウェアの開発もアジャイルな手法を用いて行っています。",
 	"welcome": "ようこそ",
-	"course_list": "コースリスト"
+	"course_list": "コースリスト",
+	"Privacy_Policy": "個人情報保護方針",
+	"Terms_and_Conditions": "利用規約"
 }
