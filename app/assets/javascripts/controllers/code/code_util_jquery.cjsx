@@ -1,4 +1,4 @@
-  
+
 window.codeutil =
   getParameterByName: (name) ->
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
@@ -41,7 +41,7 @@ window.codeutil =
       if kv[0] is 'locale'
         lang = kv[1]
         break
-    
+
     URL = "https://ootalk-syntax-list.herokuapp.com/"
     LANG = lang ? "en"
     $.get URL + LANG, null, (lists) =>
@@ -157,8 +157,7 @@ window.codeutil =
       data : params
       timeout: 10000
       success: (data) ->
-        headline_text = '<table class = "table table-hover"><thead><tr><th></td><th>' + 'Excute Code' + '</th><th>' + 'Excute Result' + '</th></tr></thead><tbody></tbody></table>'
-        $('#output_code').append(headline_text)
+        $('#output_code table').show()
         for d, i in data
           line_text = '<tr><th>' + (i+1).toString() + '</th><td>' + d['exec'] + '</td><td>' + d['result'] + '</td></tr>'
           $('#output_code table tbody').append(line_text)
