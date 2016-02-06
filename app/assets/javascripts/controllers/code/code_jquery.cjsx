@@ -17,7 +17,9 @@ $ ->
   #reset button
   $("input[type ='reset']").click ->
     $('#input_code').empty()
-    $('#output_code').empty()
+    # $('#output_code').empty()
+    $('#output_code table tbody').text ""
+    $('#output_code table').hide()
     $('#input_code').droppable('enable')
     localStorage.setItem("auto_saved_code", "")
 
@@ -45,7 +47,7 @@ $ ->
         () ->
           localStorage.setItem("auto_saved_code", $("#input_code").html())
       )
-  
+
   if $("#json_code").length == 1
     myCodeMirror = CodeMirror.fromTextArea $("#json_code")[0],
       name:"javascript"
@@ -55,7 +57,8 @@ $ ->
 
   $('#code_execute').submit (event) ->
     event.preventDefault()
-    $('#output_code').text ""
+    # $('#output_code').text ""
+    $('#output_code table tbody').text ""
 
     doc = myCodeMirror.getDoc()
     o = {}
@@ -69,7 +72,9 @@ $ ->
     codeui.createTreeNode($("#input_code"))
     for elem in codeui.treeNode()
       trees.push {"Program": elem}
-    $('#output_code').text ""
+    # $('#output_code').text ""
+    $('#output_code table tbody').text ""
+
 
     o = {}
     o["code[src]"] = JSON.stringify trees

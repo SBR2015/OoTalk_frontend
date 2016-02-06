@@ -1,4 +1,4 @@
-  
+
 window.codeutil =
   getParameterByName: (name) ->
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
@@ -41,7 +41,7 @@ window.codeutil =
       if kv[0] is 'locale'
         lang = kv[1]
         break
-    
+
     # URL = "http://127.0.0.1:3000/api/v1/abstractsyntax/"
     URL = "https://ootalk-syntax-list.herokuapp.com/"
     LANG = lang ? "en"
@@ -147,8 +147,9 @@ window.codeutil =
       timeout: 10000
       success: (data) ->
         #    $('#output_code').html syntaxHighlight JSON.stringify(data, undefined, 4)
-        headline_text = '<table class = "table table-hover"><thead><tr><th></td><th>' + 'Excute Code' + '</th><th>' + 'Excute Result' + '</th></tr></thead><tbody></tbody></table>'
-        $('#output_code').append(headline_text)
+        # headline_text = '<table class = "table table-hover"><thead><tr><th></td><th>' + 'Excute Code' + '</th><th>' + 'Excute Result' + '</th></tr></thead><tbody></tbody></table>'
+        $('#output_code table').show()
+        # $('#output_code').append(headline_text)
         for d, i in data
           line_text = '<tr><th>' + (i+1).toString() + '</th><td>' + d['exec'] + '</td><td>' + d['result'] + '</td></tr>'
           $('#output_code table tbody').append(line_text)
