@@ -20,7 +20,9 @@ $ ->
   $("input[type ='reset']").click ->
     $('#input_code').empty()
     $('#trash-can').css("height", "400px")
-    $('#output_code').empty()
+    # $('#output_code').empty()
+    $('#output_code table tbody').text ""
+    $('#output_code table').hide()
     $('#input_code').droppable('enable')
     localStorage.setItem("auto_saved_code", "")
 
@@ -62,14 +64,15 @@ $ ->
 
   $('#code_execute').submit (event) ->
     event.preventDefault()
-    $('#output_code').text ""
+    # $('#output_code').text ""
+    $('#output_code table tbody').text ""
 
     doc = myCodeMirror.getDoc()
     o = {}
     o["code[src]"] = doc.getValue()
     successCallback = (data) ->
       codeutil.executeRequest(o, data)
-    
+
     codeutil.checkToken(successCallback)
 
   $('#ast_code_execute').submit (event) ->
@@ -79,13 +82,15 @@ $ ->
     codeui.createTreeNode($("#input_code"))
     for elem in codeui.treeNode()
       trees.push {"Program": elem}
-    $('#output_code').text ""
+    # $('#output_code').text ""
+    $('#output_code table tbody').text ""
+
 
     o = {}
     o["code[src]"] = JSON.stringify trees
     successCallback = (data) ->
       codeutil.executeRequest(o, data)
-    
+
     codeutil.checkToken(successCallback)
 
   # Navigation var
