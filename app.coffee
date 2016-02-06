@@ -101,6 +101,8 @@ app.use (req, res, next) ->
   res.locals.course_list = res.__("course_list")
   res.locals.Privacy_Policy = res.__("Privacy_Policy")
   res.locals.Terms_and_Conditions = res.__("Terms_and_Conditions")
+  res.locals.Execute_Code = res.__("Execute Code")
+  res.locals.Execute_Result = res.__("Execute Result")
   next()
 
 # static hosting
