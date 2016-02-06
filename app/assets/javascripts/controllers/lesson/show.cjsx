@@ -15,7 +15,6 @@ Lesson = React.createClass
       type:'GET'
       dataType: 'json'
       success: ((data) ->
-        console.log data
         @setState
           lesson: data
           body: Markdown.toHTML(data.body)

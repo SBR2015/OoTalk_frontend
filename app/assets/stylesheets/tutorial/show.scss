@@ -1,0 +1,29 @@
+#tutorial-button {
+  background-color: #f7f7f7;
+  font-size: large;
+  padding: 5px;
+  text-transform: uppercase;
+
+  div {
+    div {
+      background-color: #fff;
+      color: #aaa;
+      height: 60px;
+      margin: 10px;
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    div:hover {
+      background-color: #ff6666;
+      color: #fff;
+    }
+  }
+}
+
+
+#tutorial-video {
+  video {
+    width: 100%;
+  }
+}
