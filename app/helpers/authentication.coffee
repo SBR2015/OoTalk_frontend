@@ -5,7 +5,8 @@ class Authentication
   _email = ''
   _password = ''
   _password_confirmation = ''
-  _confirm_success_url = 'http://localhost:3000/users/success'
+  env = process.env.NODE_ENV || 'development'
+  _confirm_success_url = if env == 'production' then 'https://ootalk.herokuapp.com/users/success' else 'http://localhost:3000/users/success'
   BASEURL = 'https://ootalkbackend.herokuapp.com/api/v1'
 
   constructor: (params = {}) ->
