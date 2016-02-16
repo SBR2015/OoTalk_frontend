@@ -5,7 +5,8 @@ Course = require './course/index.cjsx'
 LessonList = require './lesson/index.cjsx'
 Lesson = require './lesson/show.cjsx'
 TutorialButton = require './tutorial/show.cjsx'
-TUTORIALS = ['Drag & Drop', 'Submit', 'Delete', 'Course']
+TUTORIALS = ['Example', 'Delete', 'Course']
+YOUTUBE_URLS = ["https://www.youtube.com/embed/nMeKaoluLYM", "https://www.youtube.com/embed/sC8MMMPQUGs", "https://www.youtube.com/embed/jb0TLdsYGk0"]
 
 $ ->
   ReactDOM.render(
@@ -28,7 +29,7 @@ $ ->
 
   ReactDOM.render(
     # <CommentBox />
-    React.createElement(TutorialButton, tuts: TUTORIALS),
+    React.createElement(TutorialButton, tuts: TUTORIALS, videos: YOUTUBE_URLS),
     document.getElementById('tutorial-button')
   )
 
