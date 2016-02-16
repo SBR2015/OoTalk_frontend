@@ -4,17 +4,17 @@ ReactDOM = require 'react-dom'
 TutorialButton = React.createClass
   handleClick: (i) ->
     tut = @props.tuts[i]
+    video_url = @props.videos[i]
     console.log "Tutorial: " + tut
     Test = React.createClass
       render: ->
-        <video controls autoPlay src="https://s3.amazonaws.com/f.cl.ly/items/0W3o0X1N3O2V0G051L2Y/Screen%20Recording%202016-02-03%20at%2004.30%20PM.mov"></video>
+        <iframe width="700" height="400" src={ video_url }></iframe>
     ReactDOM.render(
       React.createElement(Test, null),
       document.getElementById('tutorial-video')
     )
 
   render: ->
-
     return (
       <div>
       {
